@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Unit 2 · Vocabulary</title>
+  <style>
+    :root {
+      --bg: #f7f9fc;
+      --card-bg: #ffffff;
+      --correct: #2e7d32;
+      --incorrect: #c62828;
+      --shadow: 0 2px 6px rgba(0,0,0,0.12);
+      --radius: 12px;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 24px;
+      font-family: system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+      background: var(--bg);
+      color: #123;
+    }
+    .app {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    h1 {
+      margin-top: 0;
+      font-size: 1.6rem;
+      color: #1a237e;
+    }
+    h2 {
+      margin-top: 0;
+      font-size: 1.1rem;
+      color: #3949ab;
+    }
+    .student-box {
+      margin: 8px 0 16px;
+      padding: 8px 10px;
+      background: #e3f2fd;
+      border-radius: 10px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: .95rem;
+    }
+    .student-box input {
+      border-radius: 8px;
+      border: 1px solid #c5cae9;
+      padding: 4px 8px;
+      font-size: .95rem;
+    }
+    .badge {
+      display: inline-block;
+      background: #fff3cd;
+      color: #795548;
+      padding: 3px 10px;
+      border-radius: 999px;
+      font-size: .8rem;
+      margin-left: 4px;
+    }
+    .card {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 14px 16px;
+      margin-bottom: 12px;
+      border-top: 3px solid #bbdefb;
+    }
+    .card p { margin: 6px 0; }
+    select, input[type="text"] {
+      margin-top: 4px;
+      width: 100%;
+      max-width: 260px;
+      border-radius: 8px;
+      border: 1px solid #c5cae9;
+      padding: 4px 6px;
+      font-size: .95rem;
+    }
+    .btn-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 4px;
+    }
+    button {
+      border: none;
+      border-radius: 999px;
+      padding: 8px 14px;
+      font-size: .9rem;
+      cursor: pointer;
+      box-shadow: var(--shadow);
+      background: #4a7ae6;
+      color: white;
+      font-weight: 600;
+    }
+    button.secondary {
+      background: #eeeeee;
+      color: #333;
+    }
+    .feedback {
+      margin-top: 10px;
+      padding: 8px 10px;
+      border-radius: 10px;
+      font-size: .9rem;
+      display: none;
+    }
+    .feedback.ok {
+      display: block;
+      background: #e8f5e9;
+      color: var(--correct);
+      border: 1px solid #a5d6a7;
+    }
+    .feedback.ko {
+      display: block;
+      background: #ffebee;
+      color: var(--incorrect);
+      border: 1px solid #ef9a9a;
+    }
+    .correct {
+      background: #e8f5e9;
+      border-color: var(--correct) !important;
+    }
+    .incorrect {
+      background: #ffebee;
+      border-color: var(--incorrect) !important;
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <h1>Unit 2 · Vocabulary</h1>
+    <h2>In nature <span class="badge">Mode: neutral (practice)</span></h2>
+
+    <div class="student-box">
+      <label for="name">Student name:</label>
+      <input id="name" type="text" placeholder="">
+    </div>
+
+    <div class="card">
+      <p><strong>1.</strong> Choose the correct word for the picture: (mountain / lake)</p>
+      <select id="q1">
+        <option value="">– choose –</option>
+        <option value="mountain">mountain</option>
+        <option value="lake">lake</option>
+      </select>
+    </div>
+
+    <div class="card">
+      <p><strong>2.</strong> Translate into English: <em>río</em></p>
+      <input id="q2" type="text" placeholder="">
+    </div>
+
+    <div class="card">
+      <p><strong>3.</strong> The desert is…</p>
+      <p>Choose the best adjective:</p>
+      <select id="q3">
+        <option value="">– choose –</option>
+        <option value="dry">dry</option>
+        <option value="deep">deep</option>
+      </select>
+    </div>
+
+    <div class="card">
+      <p><strong>4.</strong> Translate into English: <em>colina</em></p>
+      <input id="q4" type="text" placeholder="">
+    </div>
+
+    <div class="card">
+      <div class="btn-row">
+        <button type="button" onclick="checkAll()">Check answers</button>
+        <button type="button" class="secondary" onclick="resetAll()">Reset</button>
+      </div>
+      <div id="feedback" class="feedback"></div>
+    </div>
+  </div>
+
+  <script>
+    function norm(str) {
+      return str.toLowerCase().trim();
+    }
+    function mark(el, ok) {
+      el.classList.remove("correct", "incorrect");
+      el.classList.add(ok ? "correct" : "incorrect");
+    }
+    function checkAll() {
+      let score = 0;
+      const total = 4;
+
+      const q1 = document.getElementById("q1");
+      const q2 = document.getElementById("q2");
+      const q3 = document.getElementById("q3");
+      const q4 = document.getElementById("q4");
+
+      if (q1.value === "mountain") { score++; mark(q1, true); } else { mark(q1, false); }
+      if (norm(q2.value) === "river") { score++; mark(q2, true); } else { mark(q2, false); }
+      if (q3.value === "dry") { score++; mark(q3, true); } else { mark(q3, false); }
+      if (norm(q4.value) === "hill") { score++; mark(q4, true); } else { mark(q4, false); }
+
+      const fb = document.getElementById("feedback");
+      const pct = Math.round(score / total * 100);
+      if (score === total) {
+        fb.className = "feedback ok";
+        fb.style.display = "block";
+        fb.textContent = "🌟 Great! " + score + " / " + total + " (" + pct + "%).";
+      } else {
+        fb.className = "feedback ko";
+        fb.style.display = "block";
+        fb.textContent = "Review the red answers. Score: " + score + " / " + total + " (" + pct + "%).";
+      }
+    }
+    function resetAll() {
+      document.querySelectorAll("input[type='text'], select").forEach(el => {
+        el.value = "";
+        el.classList.remove("correct", "incorrect");
+      });
+      const fb = document.getElementById("feedback");
+      fb.className = "feedback";
+      fb.style.display = "none";
+      fb.textContent = "";
+    }
+  </script>
+</body>
+</html>
